@@ -1,0 +1,70 @@
+<main>
+    <div class="navbar">
+        <div class="navbar-items">
+            <img src="/assets/logo.png" alt="" width="80px">
+            <h1>Internet of Things</h1>
+        </div>
+    </div>
+    <section class="principal">
+        <!-- Contenido de la sección principal -->
+        <div class="container-bulbs">
+            <!-- LED Rojo -->
+            <div class="bulb-1">
+                <!-- Botón ON -->
+                <button class="buttonOn" (click)="ledOn($event, 'ledRojo')">ON</button>
+
+                <!-- Imagen del led -->
+                <img id="ledRojo" [src]="ledRojoOn ? '/assets/redLedOn.jpg' : '/assets/redLedOff.jpg'"
+                    style="width: 200px; height: auto;">
+
+
+                <!-- Botón OFF -->
+                <button class="buttonOff" (click)="ledOff($event, 'ledRojo')">OFF</button>
+            </div>
+
+            <!-- LED Verde -->
+            <div class="bulb-2">
+                <!-- Botón ON -->
+                <button class="buttonOn" (click)="ledOn($event, 'ledVerde')">ON</button>
+
+                <!-- Imagen del led -->
+                <img id="ledVerde" [src]="ledVerdeOn ? '/assets/greenLedOn.jpg' : '/assets/greenLedOff.jpg'"
+                    style="width: 200px; height: auto;">
+
+                <!-- Botón OFF -->
+                <button class="buttonOff" (click)="ledOff($event, 'ledVerde')">OFF</button>
+            </div>
+
+            <!-- LED Azul -->
+            <div class="bulb-3">
+                <!-- Botón ON -->
+                <button class="buttonOn" (click)="ledOn($event, 'ledAzul')">ON</button>
+
+                <!-- Imagen del led -->
+                <img id="ledAzul" [src]="ledAzulOn ? '/assets/blueLedOn.jpg' : '/assets/blueLedOff.jpg'"
+                    style="width: 200px; height: auto;">
+
+                <!-- Botón OFF -->
+                <button class="buttonOff" (click)="ledOff($event, 'ledAzul')">OFF</button>
+            </div>
+
+            <!-- Slider para el servomotor -->
+            <div class="container-servo">
+                <img src="/assets/servo.png" width="200px">
+                <div class="slider-container">
+                    <input type="range" min="0" max="180" step="1" [(ngModel)]="sliderValue">
+                    <p>{{ sliderValue }}°</p>
+                </div>
+            </div>
+
+            <!-- Código del chart -->
+            <div class="myChartDiv">
+                <canvas id="myChart"></canvas>
+            </div>
+
+        </div>
+    </section>
+    <footer class="footer">
+        <p>Elaborado por José Eduardo Chávez Moreno y Jorge Christian Serrano Puertos - TIDSM 5B</p>
+    </footer>
+</main>
