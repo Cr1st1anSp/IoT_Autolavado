@@ -15,10 +15,6 @@ export class ComponentesService {
     return this.httpClient.get(this.URL);
   }
 
-  public saveData(data: string): Observable<any> {
-    return this.httpClient.get(`${this.URL}/save-data/${data}`);
-  }
-
   public updateComponent(elemento: string, estado: number): Observable<any> {
     return this.httpClient.get(`${this.URL}/${elemento}/${estado}`);
   }

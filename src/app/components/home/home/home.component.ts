@@ -1,110 +1,78 @@
 import { Component, OnInit } from '@angular/core';
-import Chart from 'chart.js/auto';
 import { ComponentesService } from '../../../services/componentes/componentes.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
 
-  // Slider servo
-  sliderValue: number = 0;
-  // Variables para controlar el estado de los focos
-  ledRojoOn: boolean = false;
-  ledVerdeOn: boolean = false;
-  ledAzulOn: boolean = false;
+  ultrasonicos: any[] = [];
 
-  constructor(public componentesService: ComponentesService) { }
+  constructor(private componentesService: ComponentesService) { }
 
-  // Método para encender el foco
-  ledOn(event: Event, ledId: string) {
-    switch (ledId) {
-      case 'ledRojo':
-        this.ledRojoOn = true;
-        this.editar(ledId, 1);
-        break;
-      case 'ledVerde':
-        this.ledVerdeOn = true;
-        this.editar(ledId, 1);
-        break;
-      case 'ledAzul':
-        this.ledAzulOn = true;
-        this.editar(ledId, 1);
-        break;
-      default:
-        break;
+  ngOnInit(): void {
+    // Se establece un intervalo para obtener los valores de los sensores ultrasónicos cada segundo
+    setInterval(() => {
+      this.componentesService.getAllComponents().subscribe(data => {
+        // Se actualizan los datos de los sensores
+        console.log('Valores de los ultrasonicos:', data);
+        this.ultrasonicos = Object.keys(data)
+          .map(key => ({ elemento: key, estado: data[key] }))
+          .reverse();
+        // Se calculan los valores de los sliders basados en los datos de los sensores
+        const { ultra1Value, ultra2Value, ultra3Value } = this.calculateSliderValue();
+        console.log('Valores de los sliders - Ultra 1:', ultra1Value, '- Ultra 2:', ultra2Value, '- Ultra 3:', ultra3Value);
+      });
+    }, 1000);
+  }
+
+  // Método para calcular los valores de los sliders
+  calculateSliderValue(): { ultra1Value: number, ultra2Value: number, ultra3Value: number } {
+    let ultra1 = this.ultrasonicos.find(u => u.elemento === 'ultra1')?.estado || 0;
+    let ultra2 = this.ultrasonicos.find(u => u.elemento === 'ultra2')?.estado || 0;
+    let ultra3 = this.ultrasonicos.find(u => u.elemento === 'ultra3')?.estado || 0;
+
+    ultra1 = Math.min(Math.max(0, 11 - ultra1), 11);
+    ultra2 = Math.min(Math.max(0, 11 - ultra2), 11);
+    ultra3 = Math.min(Math.max(0, 11 - ultra3), 11);
+
+    const ultra1Value = ultra1;
+    const ultra2Value = ultra2;
+    const ultra3Value = ultra3;
+
+    // Se actualizan las imágenes de los LEDs
+    this.updateImages(ultra1Value, ultra2Value, ultra3Value);
+
+    return { ultra1Value, ultra2Value, ultra3Value };
+  }
+
+  // Método para actualizar las imágenes de los LEDs
+  updateImages(ultra1Value: number, ultra2Value: number, ultra3Value: number): void {
+    const redLedImage = document.getElementById('redLed') as HTMLImageElement;
+    const blueLedImage = document.getElementById('blueLed') as HTMLImageElement;
+    const greenLedImage = document.getElementById('greenLed') as HTMLImageElement;
+
+    //  Fase de lavado. Estado azul
+    if (ultra1Value == 11) {
+      blueLedImage.src = "/assets/blueLedOff.jpg";
+    } else {
+      blueLedImage.src = "/assets/blueLedOn.jpg";
+    }
+
+    // Fase de enjuague. Estado verde
+    if (ultra2Value == 11) {
+      greenLedImage.src = "/assets/greenLedOff.jpg";
+    } else {
+      greenLedImage.src = "/assets/greenLedOn.jpg";
+    }
+
+    // Fase de secado. Estado rojo
+    if (ultra3Value == 11) {
+      redLedImage.src = "/assets/redLedOff.jpg";
+    } else {
+      redLedImage.src = "/assets/redLedOn.jpg";
     }
   }
-
-  // Método para apagar el foco
-  ledOff(event: Event, ledId: string) {
-    switch (ledId) {
-      case 'ledRojo':
-        this.ledRojoOn = false;
-        this.editar(ledId, 0);
-        break;
-      case 'ledVerde':
-        this.ledVerdeOn = false;
-        this.editar(ledId, 0);
-        break;
-      case 'ledAzul':
-        this.ledAzulOn = false;
-        this.editar(ledId, 0);
-        break;
-      default:
-        break;
-    }
-  }
-
-  // Método para actualizar un componente
-  editar(elemento: string, estado: number): void {
-    this.componentesService.updateComponent(elemento, estado).subscribe(response => {
-      console.log("Componente actualizado:", response);
-    }, error => {
-      console.error("Error al actualizar componente:", error);
-    });
-  }
-
-
-  // Configuración del chart
-  ngOnInit() {
-    const ctx = document.getElementById('myChart') as HTMLCanvasElement;
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1
-        },
-        {
-          label: '# of Sales',
-          data: [5, 8, 10, 15, 20, 25],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        },
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Chart.js Line Chart'
-          }
-        }
-      }
-    });
-  }
-
-
 }

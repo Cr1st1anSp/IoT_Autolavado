@@ -1,65 +1,56 @@
 <main>
-    <div class="navbar">
-        <div class="navbar-items">
-            <img src="/assets/logo.png" alt="" width="80px">
-            <h1>Internet of Things</h1>
-        </div>
-    </div>
-    <section class="principal">
-        <!-- Contenido de la sección principal -->
-        <div class="container-bulbs">
-            <!-- LED Rojo -->
-            <div class="bulb-1">
-                <!-- Botón ON -->
-                <button class="buttonOn" (click)="ledOn($event, 'ledRojo')">ON</button>
+    <section class="autolavado">
+        <div class="container">
 
-                <!-- Imagen del led -->
-                <img id="ledRojo" [src]="ledRojoOn ? '/assets/redLedOn.jpg' : '/assets/redLedOff.jpg'"
-                    style="width: 200px; height: auto;">
-
-
-                <!-- Botón OFF -->
-                <button class="buttonOff" (click)="ledOff($event, 'ledRojo')">OFF</button>
-            </div>
-
-            <!-- LED Verde -->
-            <div class="bulb-2">
-                <!-- Botón ON -->
-                <button class="buttonOn" (click)="ledOn($event, 'ledVerde')">ON</button>
-
-                <!-- Imagen del led -->
-                <img id="ledVerde" [src]="ledVerdeOn ? '/assets/greenLedOn.jpg' : '/assets/greenLedOff.jpg'"
-                    style="width: 200px; height: auto;">
-
-                <!-- Botón OFF -->
-                <button class="buttonOff" (click)="ledOff($event, 'ledVerde')">OFF</button>
-            </div>
-
-            <!-- LED Azul -->
-            <div class="bulb-3">
-                <!-- Botón ON -->
-                <button class="buttonOn" (click)="ledOn($event, 'ledAzul')">ON</button>
-
-                <!-- Imagen del led -->
-                <img id="ledAzul" [src]="ledAzulOn ? '/assets/blueLedOn.jpg' : '/assets/blueLedOff.jpg'"
-                    style="width: 200px; height: auto;">
-
-                <!-- Botón OFF -->
-                <button class="buttonOff" (click)="ledOff($event, 'ledAzul')">OFF</button>
-            </div>
-
-            <!-- Slider para el servomotor -->
-            <div class="container-servo">
-                <img src="/assets/servo.png" width="200px">
-                <div class="slider-container">
-                    <input type="range" min="0" max="180" step="1" [(ngModel)]="sliderValue">
-                    <p>{{ sliderValue }}°</p>
+            <!-- Indicadores de fases en el autolavado -->
+            <div class="container-leds">
+                <!-- Fase de lavado. Estado azul -->
+                <div class="led">
+                    <img id="blueLed" src="/assets/blueLedOff.jpg" width="200px">
+                </div>
+                <!-- Fase de enjuague. Estado verde -->
+                <div class="led">
+                    <img id="greenLed" src="/assets/greenLedOff.jpg" width="200px">
+                </div>
+                <!-- Fase de secado. Estado rojo -->
+                <div class="led">
+                    <img id="redLed" src="/assets/redLedOff.jpg" width="200px">
                 </div>
             </div>
 
-            <!-- Código del chart -->
-            <div class="myChartDiv">
-                <canvas id="myChart"></canvas>
+            <!-- Carrito dentro del autolavado -->
+            <div class="car-container">
+                <!-- Fase de lavado. Estado azul -->
+                <div class="slider-container">
+                    <input type="range" min="0" max="11" class="slider"
+                        [ngClass]="{'no-image': calculateSliderValue().ultra1Value == 111}"
+                        [value]="calculateSliderValue().ultra1Value"> <!-- Aquí había un "disabled" y el ultra1Value era 11, no 111" -->
+                    <!-- Le cambié nada más para que tengas algo visual y puedas moverle al css -->
+                </div>
+                <!-- Fase de enjuague. Estado verde -->
+                <div class="slider-container">
+                    <input type="range" min="0" max="11" class="slider"
+                        [ngClass]="{'no-image': calculateSliderValue().ultra2Value == 111}"
+                        [value]="calculateSliderValue().ultra2Value"> <!-- Aquí había un "disabled" y el ultra1Value era 11, no 111" -->
+                    <!-- Le cambié nada más para que tengas algo visual y puedas moverle al css -->
+                </div>
+                <!-- Fase de secado. Estado rojo -->
+                <div class="slider-container">
+                    <input type="range" min="0" max="11" class="slider"
+                        [ngClass]="{'no-image': calculateSliderValue().ultra3Value == 111}"
+                        [value]="calculateSliderValue().ultra3Value"> <!-- Aquí había un "disabled" y el ultra1Value era 11, no 111" -->
+                    <!-- Le cambié nada más para que tengas algo visual y puedas moverle al css -->
+                </div>
+            </div>
+
+            <!-- Impresión de los valores de distancia en la interfaz -->
+            <div class="ultrasonico-container ultrasonico">
+                <div *ngFor="let ultrasonico of ultrasonicos" class="ultrasonico-container">
+                    <div class="ultrasonico-{{ ultrasonico.elemento }}">
+                        <div class="ultrasonico-label">{{ ultrasonico.estado }} cm</div>
+                        <img src="/assets/ultrasonico.png" width="200px">
+                    </div>
+                </div>
             </div>
 
         </div>

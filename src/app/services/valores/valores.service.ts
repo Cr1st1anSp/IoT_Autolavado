@@ -15,6 +15,10 @@ export class ValoresService {
     return this.httpClient.get(this.URL);
   }
 
+  public getSpecificValue(elemento: string): Observable<any> {
+    return this.httpClient.get(`${this.URL}/${elemento}`);
+  }
+
   public addValue(value: any): Observable<any> {
     return this.httpClient.post(this.URL, value);
   }

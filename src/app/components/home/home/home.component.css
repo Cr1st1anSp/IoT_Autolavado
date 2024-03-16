@@ -1,147 +1,135 @@
+/* Navbar */
 .navbar {
-    background-color: #171717;
-    padding: 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
+  background-color: #171717;
+  padding: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1;
 }
 
 .navbar h1 {
-    color: #fff;
+  color: #fff;
 }
 
 .navbar-items {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Body */
 body {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
 
-.buttonOn {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 12px 24px;
-    outline: none;
-    text-decoration: none;
-    font-size: 10px;
-    border-radius: 200px;
-    cursor: pointer;
+/* Autolavado section */
+.autolavado {
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.buttonOff {
-    background-color: #f44336;
-    border: none;
-    color: white;
-    padding: 12px 24px;
-    outline: none;
-    text-decoration: none;
-    font-size: 10px;
-    border-radius: 200px;
-    cursor: pointer;
+/* LEDs */
+.container-leds {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
-.principal {
-    margin-top: 20px;
+.led {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #2f2f2f;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
-.container-bulbs {
-    margin-top: 150px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+/* Slider */
+.car-container {
+  margin-top: 20px;
+  background-color: #2f2f2f;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.bulb-1,
-.bulb-2,
-.bulb-3 {
-    background-color: #2f2f2f;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.container-servo {
-    background-color: #2f2f2f;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 500px;
-    padding: 10px;
-    width: 1132px;
-
-}
-
-.container-servo p {
-    color: #fff;
+.slider {
+  height: 1px; /* Editar el grosor de la línea del slider */
 }
 
 .slider-container {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
+  flex: 1;
 }
 
 .slider-container input[type="range"] {
-    width: 100%;
-    margin-right: 10px;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 15px;
-    background: #3848a1;
-    outline: none;
-    border-radius: 5px;
+  width: 100%;
 }
 
-.slider-container input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: #4CAF50;
-    cursor: pointer;
-    border-radius: 50%;
+.slider::-webkit-slider-thumb,
+.slider::-moz-range-thumb {
+  width: 100px; /* Aquí ajusta el tamaño de la imagen que le pongas */
+  height: 52px; /*  Tiene que ser el mismo que en la imagen original */
+  background: url('../../../../assets/cars2.png'); /* Reemplazar con la imagen correcta */
+  border: none;
 }
 
-.slider-container input[type="range"]::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: #eee;
-    cursor: pointer;
-    border-radius: 50%;
+.no-image::-webkit-slider-thumb,
+.no-image::-moz-range-thumb {
+  background: none !important;
 }
 
+/* Footer */
 .footer p {
-    color: #fff;
+  color: #fff;
 }
 
 .footer {
-    margin-top: 20px;
-    background-color: #171717;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  margin-top: 20px;
+  background-color: #171717;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-/* Estilos del chart */
-.myChartDiv {
-    width: 1152px;
-    height: 500px;
-    border-radius: 10px;
-    background-color: #2f2f2f;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+/* Ultrasonico */
+.ultrasonico-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.ultrasonico {
+  background-color: #2f2f2f;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.ultrasonico-label {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
+  color: #fff;
+  font-weight: bold;
+  font-size: large;
 }
